@@ -9,6 +9,7 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zet.learnjson.model.Group;
@@ -62,9 +63,19 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: " + group);
 
         String tupianJson = ReUseUtil.assetsGetString(MainActivity.this, "tupian.json");
+
+//        List<VO> list = JSON.parseObject("...", new TypeReference<List<VO>>() {});
+        TypeReference<List<Tupian>> typeReference = new TypeReference<List<Tupian>>() {
+        };
+        List<Tupian> tupianList02 = JSON.parseObject(tupianJson, typeReference);
+        for (Tupian tupian : tupianList02) {
+            Log.d(TAG, "testFastJson: 01" + tupian);
+        }
+
         List<Tupian> tupianList = JSON.parseArray(tupianJson, Tupian.class);
+
         for (Tupian tupian : tupianList) {
-            Log.d(TAG, "testFastJson: " + tupian);
+            Log.d(TAG, "testFastJson: 02" + tupian);
         }
     }
 
